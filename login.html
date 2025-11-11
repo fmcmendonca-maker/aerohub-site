@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AeroHub Aviation Suite</title>
+    <meta name="description" content="Secure login to AeroHub Aviation Suite - Real-time aircraft availability, live contract tracking, and exclusive market insights.">
+    <meta property="og:title" content="Login - AeroHub Aviation Suite">
+    <meta property="og:description" content="Access your secure aviation management portal">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aerohub.it/login">
+    <meta property="og:image" content="images/hero.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="aerohub_new_black.png" type="image/png">
+    <link rel="apple-touch-icon" href="aerohub_new_black.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Your Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="light">
+
+    <!-- HEADER -->
+    <div w3-include-html="partials/header.html"></div>
+
+    <!-- LOGIN SECTION -->
+    <section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>AeroHub Aviation Suite</h1>
+                    <p class="login-subtitle">Secure Client Portal</p>
+                    <div class="login-features">
+                        <span>Real-time Aircraft Availability</span>
+                        <span class="dot">•</span>
+                        <span>Live Contract Tracking</span>
+                        <span class="dot">•</span>
+                        <span>Fleet Performance Dashboards</span>
+                        <span class="dot">•</span>
+                        <span>Exclusive Market Insights</span>
+                    </div>
+                </div>
+                
+                <div class="login-form-container">
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="remember" name="remember">
+                                <span class="checkmark"></span>
+                                Remember me for 30 days
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">
+                            <span class="btn-text">Access Aviation Suite</span>
+                            <span class="btn-loading" style="display: none;">Authenticating...</span>
+                        </button>
+                        
+                        <div class="login-links">
+                            <a href="#" class="forgot-password">Forgot your password?</a>
+                            <span class="separator">•</span>
+                            <a href="mailto:info@aerohub.it" class="contact-support">Contact Support</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div w3-include-html="partials/footer.html"></div>
+
+    <!-- DARK MODE TOGGLE -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+
+    <!-- SCRIPTS -->
+    <script src="js/main.js"></script>
+    <script>
+        // === INCLUDE PARTIALS + INIT APP ===
+        function includeHTML() {
+            const elements = document.querySelectorAll('[w3-include-html]');
+            if (elements.length === 0) {
+                initApp();
+                initLogin();
+                return;
+            }
+
+            let loaded = 0;
+            elements.forEach(el => {
+                const file = el.getAttribute('w3-include-html');
+                fetch(file)
+                    .then(res => {
+                        if (!res.ok) throw new Error(`${file} not found`);
+                        return res.text();
+                    })
+                    .then(data => {
+                        el.innerHTML = data;
+                        el.removeAttribute('w3-include-html');
+                        loaded++;
+                        if (loaded === elements.length) {
+                            // Wait a bit for DOM to fully update before initializing
+                            setTimeout(() => {
+                                initApp();
+                                initLogin();
+                            }, 100);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        el.innerHTML = `<p style="color:red">Error: ${file}</p>`;
+                        loaded++;
+                        if (loaded === elements.length) {
+                            setTimeout(() => {
+                                initApp();
+                                initLogin();
+                            }, 100);
+                        }
+                    });
+            });
+        }
+
+        // === LOGIN FUNCTIONALITY ===
+        function initLogin() {
+            const form = document.getElementById('loginForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const btn = form.querySelector('.login-btn');
+                const btnText = btn.querySelector('.btn-text');
+                const btnLoading = btn.querySelector('.btn-loading');
+                
+                // Show loading state
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                btn.disabled = true;
+                
+                // Simulate authentication (replace with real auth)
+                setTimeout(() => {
+                    // Reset button state
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    btn.disabled = false;
+                    
+                    // Show demo message (replace with real redirect)
+                    alert('Demo Login: In production, this would authenticate and redirect to the Aviation Suite dashboard.');
+                }, 2000);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', includeHTML);
+    </script>
+</body>
+</html>

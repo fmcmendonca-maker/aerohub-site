@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroHub – Aviation Brokerage & Consultancy</title>
+    <meta name="description" content="Exclusive brokerage for complex charter flights, wet lease/ACMI, dry lease, and specialized aviation consultancy.">
+    <meta property="og:title" content="AeroHub – Aviation Brokerage & Consultancy">
+    <meta property="og:description" content="Your Personal Gateway to Complex Aviation Solutions">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aerohub.it">
+    <meta property="og:image" content="images/hero.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="aerohub_new_black.png" type="image/png">
+    <link rel="apple-touch-icon" href="aerohub_new_black.png">
+    
+    <!-- Leaflet + Fonts -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Your Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="light">
+
+    <!-- HEADER -->
+    <div w3-include-html="partials/header.html"></div>
+
+    <!-- SERVICES -->
+    <section class="container">
+        <h2>Core Services</h2>
+        <div class="services-grid">
+            <!-- Complex Charter Flights -->
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="images/charter.jpg" alt="VIP Charter Jet in Flight">
+                </div>
+                <div class="service-content">
+                    <h3><a href="charter-flights.html" style="color:inherit;text-decoration:none;">Complex Charter Flights</a></h3>
+                    <p>Global cargo, passenger, VIP, medevac, and special mission charters. Precision execution for the most challenging requirements.</p>
+                </div>
+            </div>
+
+            <!-- Wet Lease / ACMI -->
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="images/acmi.jpg" alt="Commercial Jet on Tarmac">
+                </div>
+                <div class="service-content">
+                    <h3><a href="wet-lease-acmi.html" style="color:inherit;text-decoration:none;">Wet Lease / ACMI</a></h3>
+                    <p>Aircraft + Crew + Maintenance + Insurance. Immediate capacity solutions with full operational control and support.</p>
+                </div>
+            </div>
+
+            <!-- Dry Lease -->
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="images/dry-lease.jpg" alt="Aircraft Ready for Dry Lease">
+                </div>
+                <div class="service-content">
+                    <h3><a href="dry-lease.html" style="color:inherit;text-decoration:none;">Dry Lease</a></h3>
+                    <p>Long-term aircraft placement without crew. Strategic fleet expansion and financial optimization tailored to your needs.</p>
+                </div>
+            </div>
+
+            <!-- Strategic Consultancy -->
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="images/consultancy.jpg" alt="Aviation Strategy & Planning">
+                </div>
+                <div class="service-content">
+                    <h3><a href="consultancy.html" style="color:inherit;text-decoration:none;">Strategic Consultancy</a></h3>
+                    <p>Fleet planning, acquisitions, sales, market entry, and operational optimization — delivered with deep expertise and discretion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AVIATION SNAPSHOT -->
+    <div w3-include-html="partials/snapshot.html"></div>
+
+    <!-- ABOUT -->
+    <section class="container">
+        <div class="about">
+            <p><strong>Exclusively managed by a senior aviation specialist</strong> with deep industry connections worldwide. Direct access, full accountability, and rapid execution — you work one-on-one with the decision-maker, every time.</p>
+        </div>
+    </section>
+
+    <!-- PRIVATE LOGIN -->
+    <section class="container">
+        <div class="private-login">
+            <h2>AeroHub Aviation Suite</h2>
+            <p>Secure client portal with real-time aircraft availability, live contract tracking, fleet performance dashboards, and exclusive market insights.</p>
+            <a href="login.html" class="login-btn">Secure Login</a>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="container">
+        <div class="contact">
+            <h2>Contact</h2>
+            <p>All inquiries are handled personally and confidentially.</p>
+            <p><a href="mailto:info@aerohub.it" style="color:var(--accent);font-weight:600;">info@aerohub.it</a></p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div w3-include-html="partials/footer.html"></div>
+
+    <!-- DARK MODE TOGGLE -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // === INCLUDE PARTIALS + INIT APP ===
+        function includeHTML() {
+            const elements = document.querySelectorAll('[w3-include-html]');
+            if (elements.length === 0) {
+                initApp();
+                return;
+            }
+
+            let loaded = 0;
+            elements.forEach(el => {
+                const file = el.getAttribute('w3-include-html');
+                fetch(file)
+                    .then(res => {
+                        if (!res.ok) throw new Error(`${file} not found`);
+                        return res.text();
+                    })
+                    .then(data => {
+                        el.innerHTML = data;
+                        el.removeAttribute('w3-include-html');
+                        loaded++;
+                        if (loaded === elements.length) {
+                            initApp(); // All partials loaded → run main.js
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        el.innerHTML = `<p style="color:red">Error: ${file}</p>`;
+                        loaded++;
+                        if (loaded === elements.length) initApp();
+                    });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', includeHTML);
+    </script>
+</body>
+</html>
