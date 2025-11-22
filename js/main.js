@@ -5,7 +5,7 @@ function initApp() {
     const body = document.body;
     const logoImg = document.getElementById('logoImg');
 
-    const logo = 'aerohub_new_grey.svg';
+    const logo = '/aerohub_new_grey.svg';
 
     const savedTheme = localStorage.getItem('theme') || 'light';
     body.setAttribute('data-theme', savedTheme);
