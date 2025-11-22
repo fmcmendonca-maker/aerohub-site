@@ -5,14 +5,13 @@ function initApp() {
     const body = document.body;
     const logoImg = document.getElementById('logoImg');
 
-    const lightLogo = 'aerohub_new_black.png';
-    const darkLogo = 'aerohub_new_grey.png';
+    const logo = 'aerohub_new_grey.svg';
 
     const savedTheme = localStorage.getItem('theme') || 'light';
     body.setAttribute('data-theme', savedTheme);
     
     if (logoImg) {
-        logoImg.src = savedTheme === 'dark' ? darkLogo : lightLogo;
+        logoImg.src = logo;
     }
     
     if (toggle) toggle.textContent = savedTheme === 'dark' ? 'Sun' : 'Moon';
@@ -21,7 +20,6 @@ function initApp() {
         const isDark = body.getAttribute('data-theme') === 'dark';
         const newTheme = isDark ? 'light' : 'dark';
         body.setAttribute('data-theme', newTheme);
-        if (logoImg) logoImg.src = newTheme === 'dark' ? darkLogo : lightLogo;
         localStorage.setItem('theme', newTheme);
         toggle.textContent = newTheme === 'dark' ? 'Sun' : 'Moon';
     });
