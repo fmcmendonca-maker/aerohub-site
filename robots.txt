@@ -1,0 +1,26 @@
+# robots.txt for AeroHub (aerohub.it)
+# Generated: 2025-11-22
+
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow private/sensitive areas
+Disallow: /partials/
+Disallow: /login.html
+
+# Sitemap location
+Sitemap: https://aerohub.it/sitemap.xml
+
+# Crawl-delay to prevent overload (optional)
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

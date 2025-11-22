@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complex Charter Flights – AeroHub</title>
-    <meta name="description" content="Global cargo, passenger, VIP, medevac, and special mission charters. Precision execution for the most challenging requirements.">
+    <link rel="canonical" href="https://aerohub.it/charter-flights.html">
+    <title>AeroHub – Private Charter, VIP Flights & Cargo Charter</title>
+    <meta name="description" content="Private, VIP, corporate and cargo charter flights with global coverage. AeroHub delivers fast aircraft availability and tailored aviation solutions.">
+    <meta name="keywords" content="charter flights, private charter, vip flights, business jet charter, emergency charter, cargo charter, global charter service, corporate charter flights, air charter services, business jet charter services, VIP flights, private jet flights, luxury private jets, emergency charter flight services, charter flights for events, last-minute charter flights, global aircraft charter services, VIP air travel, medevac flights, private jet charter for executives, VIP aviation solutions, discreet VIP jet charter services">
     <meta property="og:title" content="Complex Charter Flights – AeroHub">
     <meta property="og:description" content="Access to 1,138 operators worldwide managing 35,550 aircraft">
     <meta property="og:type" content="website">
@@ -12,15 +14,39 @@
     <meta property="og:image" content="images/charter.jpg">
     <meta name="twitter:card" content="summary_large_image">
     
+    <!-- Performance -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Favicon -->
     <link rel="icon" href="aerohub_new_black.png" type="image/png">
     <link rel="apple-touch-icon" href="aerohub_new_black.png">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Sitemap -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    
+    <!-- Optimized Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <!-- Your Styles -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Charter Flight Services",
+      "provider": {
+        "@type": "Organization",
+        "name": "AeroHub",
+        "url": "https://aerohub.it"
+      },
+      "areaServed": "Worldwide",
+      "description": "Global cargo, passenger, VIP, medevac, and special mission charter flights with access to 1,000+ operators and 35,550 aircraft worldwide."
+    }
+    </script>
 </head>
 <body data-theme="light">
 
@@ -196,7 +222,7 @@
     <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
 
     <!-- SCRIPTS -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
     <script>
         // === INCLUDE PARTIALS + INIT APP ===
         function includeHTML() {

@@ -1,43 +1,17 @@
 // js/main.js
 function initApp() {
-    console.log("initApp() running...");
-
     // === THEME TOGGLE ===
     const toggle = document.getElementById('themeToggle');
     const body = document.body;
     const logoImg = document.getElementById('logoImg');
 
-    console.log('Logo element:', logoImg);
-    
-    if (logoImg) {
-        console.log('Current logo src:', logoImg.src);
-        console.log('Logo complete:', logoImg.complete);
-        console.log('Logo naturalWidth:', logoImg.naturalWidth);
-        console.log('Logo naturalHeight:', logoImg.naturalHeight);
-        console.log('Logo display style:', window.getComputedStyle(logoImg).display);
-        console.log('Logo visibility:', window.getComputedStyle(logoImg).visibility);
-    }
-
-    // TEMPORARILY DISABLE LOGO CHANGES
-    const lightLogo = 'aerohub_new_black.png';
-    const darkLogo = 'aerohub_new_grey.png';
+    const logo = 'aerohub_new_grey.svg';
 
     const savedTheme = localStorage.getItem('theme') || 'light';
     body.setAttribute('data-theme', savedTheme);
     
-    // DISABLE LOGO MANIPULATION FOR NOW
     if (logoImg) {
-        const logoSrc = savedTheme === 'dark' ? darkLogo : lightLogo;
-        console.log('Setting logo src to:', logoSrc);
-        logoImg.src = logoSrc;
-        
-        // Force reload if not loading
-        logoImg.onerror = function() {
-            console.error('Logo failed to load:', this.src);
-        };
-        logoImg.onload = function() {
-            console.log('Logo loaded successfully:', this.src);
-        };
+        logoImg.src = logo;
     }
     
     if (toggle) toggle.textContent = savedTheme === 'dark' ? 'Sun' : 'Moon';
@@ -46,7 +20,6 @@ function initApp() {
         const isDark = body.getAttribute('data-theme') === 'dark';
         const newTheme = isDark ? 'light' : 'dark';
         body.setAttribute('data-theme', newTheme);
-        logoImg.src = newTheme === 'dark' ? darkLogo : lightLogo;
         localStorage.setItem('theme', newTheme);
         toggle.textContent = newTheme === 'dark' ? 'Sun' : 'Moon';
     });
@@ -64,7 +37,6 @@ function initApp() {
         af: {minLat: -35, maxLat: 37, minLon: -20, maxLon: 55}
     };
 
-    const PREV = {na: null, eu: null, ap: null, me: null, sa: null, af: null, global: null};
     const FALLBACK = {na: 3300, eu: 2200, ap: 2400, me: 1000, sa: 850, af: 570, global: 9500};
 
     function isCommercialCallsign(cs) {
@@ -113,14 +85,13 @@ function initApp() {
                     status.className = 'live-status live';
                 }
                 if (timeEl) timeEl.textContent = 'Updated: ' + formatTime();
-                PREV[id] = count;
             });
 
             // Update peaks
             updatePeaks(counts);
 
         } catch (err) {
-            console.warn('API failed, using fallback:', err);
+            console.error('API failed, using fallback:', err);
             ['na', 'eu', 'ap', 'me', 'sa', 'af', 'global'].forEach(id => {
                 const el = document.getElementById(id + 'Count');
                 const status = document.getElementById(id + 'Status');
@@ -230,13 +201,19 @@ function initApp() {
                     });
             }
         } catch (e) {
-            console.warn('Map update failed', e);
+            console.error('Map update failed:', e);
         }
-        setTimeout(updateMap, 30000);
+        // Reduced map polling from 30s to 60s for better performance
+        setTimeout(updateMap, 60000);
     }
 
     // === START EVERYTHING ===
-    updateLive();
-    setInterval(updateLive, 60000);
-    initMap();
+    // Check if map element exists before initializing (only on index page)
+    const mapElement = document.getElementById('liveMap');
+    if (mapElement) {
+        updateLive();
+        // Reduced polling from 60s to 120s for better performance
+        setInterval(updateLive, 120000);
+        initMap();
+    }
 }

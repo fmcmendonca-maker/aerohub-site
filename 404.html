@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://aerohub.it/404.html">
+    <title>404 - Page Not Found | AeroHub</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Return to AeroHub to explore our aviation services.">
+    <meta name="robots" content="noindex, follow">
+    
+    <!-- Performance -->
+    <meta http-equiv="Cache-Control" content="public, max-age=3600">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="aerohub_new_black.png" type="image/png">
+    <link rel="apple-touch-icon" href="aerohub_new_black.png">
+    
+    <!-- Fonts - Optimized -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .error-container {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-orange);
+            line-height: 1;
+            margin: 0;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            margin: 1rem 0;
+            color: var(--text-color);
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 1rem auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .error-button {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .error-button.primary {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #ff8c00 100%);
+            color: white;
+        }
+        
+        .error-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 102, 0, 0.3);
+        }
+        
+        .error-button.secondary {
+            background: transparent;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+        }
+        
+        .error-button.secondary:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        .error-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 102, 0, 0.2);
+        }
+        
+        .error-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .error-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .error-link {
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 102, 0, 0.1);
+        }
+        
+        .error-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 102, 0, 0.15);
+            border-color: var(--primary-orange);
+        }
+        
+        .error-link strong {
+            display: block;
+            color: var(--primary-orange);
+            margin-bottom: 0.3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .error-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <main>
+        <div class="container error-container">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Flight Path Not Found</h2>
+            <p class="error-message">
+                The page you're looking for has taken off without us. 
+                Don't worry – we'll get you back on course.
+            </p>
+            
+            <div class="error-actions">
+                <a href="/" class="error-button primary">Return to Home</a>
+                <a href="javascript:history.back()" class="error-button secondary">Go Back</a>
+            </div>
+            
+            <div class="error-links">
+                <h3>Popular Destinations</h3>
+                <div class="error-links-grid">
+                    <a href="charter-flights.html" class="error-link">
+                        <strong>Charter Flights</strong>
+                        <small>Private & VIP charters</small>
+                    </a>
+                    <a href="wet-lease-acmi.html" class="error-link">
+                        <strong>Wet Lease (ACMI)</strong>
+                        <small>Aircraft capacity solutions</small>
+                    </a>
+                    <a href="dry-lease.html" class="error-link">
+                        <strong>Dry Lease</strong>
+                        <small>Long-term fleet solutions</small>
+                    </a>
+                    <a href="consultancy.html" class="error-link">
+                        <strong>Consultancy</strong>
+                        <small>Aviation expertise</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="js/main.js" defer></script>
+    <script>
+        // Load partials
+        fetch('partials/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('partials/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://aerohub.it/sitemap.html">
+    <title>Sitemap – AeroHub Aviation Services</title>
+    <meta name="description" content="Complete sitemap of AeroHub aviation services including charter flights, wet lease/ACMI, dry lease, and strategic consultancy.">
+    
+    <!-- Performance -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="aerohub_new_black.png" type="image/png">
+    <link rel="apple-touch-icon" href="aerohub_new_black.png">
+    
+    <!-- Optimized Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Your Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .sitemap-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        
+        .sitemap-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .sitemap-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        
+        .sitemap-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+        
+        .sitemap-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        [data-theme="dark"] .sitemap-section {
+            background: #1e293b;
+            border-color: #334155;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .sitemap-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        
+        [data-theme="dark"] .sitemap-section:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        .sitemap-section h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .sitemap-section h2::after {
+            display: none;
+        }
+        
+        .section-icon {
+            font-size: 1.8rem;
+        }
+        
+        .sitemap-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sitemap-section li {
+            margin-bottom: 12px;
+        }
+        
+        .sitemap-section a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .sitemap-section a:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateX(8px);
+        }
+        
+        .sitemap-section a::before {
+            content: '→';
+            margin-right: 12px;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .sitemap-section a:hover::before {
+            opacity: 1;
+        }
+        
+        .sitemap-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 4px;
+            padding-left: 12px;
+        }
+        
+        .back-to-home {
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .back-to-home a {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(244,124,32,0.4);
+        }
+        
+        .back-to-home a:hover {
+            background: #e06b1a;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(244,124,32,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .sitemap-header h1 {
+                font-size: 2rem;
+            }
+            
+            .sitemap-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- HEADER -->
+    <div w3-include-html="partials/header.html"></div>
+
+    <!-- SITEMAP CONTENT -->
+    <div class="sitemap-container">
+        <div class="sitemap-header">
+            <h1>Site Map</h1>
+            <p>Complete overview of AeroHub's aviation services and resources. Navigate through our charter flights, leasing solutions, and consultancy offerings.</p>
+        </div>
+
+        <div class="sitemap-grid">
+            <!-- Main Pages -->
+            <div class="sitemap-section">
+                <h2><span class="section-icon">🏠</span> Main</h2>
+                <ul>
+                    <li>
+                        <a href="index.html">Home</a>
+                        <div class="sitemap-description">Your gateway to complex aviation solutions</div>
+                    </li>
+                    <li>
+                        <a href="login.html">Client Portal Login</a>
+                        <div class="sitemap-description">Secure access to AeroHub Aviation Suite</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Core Services -->
+            <div class="sitemap-section">
+                <h2><span class="section-icon">✈️</span> Services</h2>
+                <ul>
+                    <li>
+                        <a href="charter-flights.html">Complex Charter Flights</a>
+                        <div class="sitemap-description">Cargo, passenger, VIP, medevac & special missions</div>
+                    </li>
+                    <li>
+                        <a href="wet-lease-acmi.html">Wet Lease / ACMI</a>
+                        <div class="sitemap-description">Aircraft + Crew + Maintenance + Insurance</div>
+                    </li>
+                    <li>
+                        <a href="dry-lease.html">Dry Lease</a>
+                        <div class="sitemap-description">Long-term aircraft placement solutions</div>
+                    </li>
+                    <li>
+                        <a href="consultancy.html">Strategic Consultancy</a>
+                        <div class="sitemap-description">Fleet planning, acquisitions & market entry</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Resources -->
+            <div class="sitemap-section">
+                <h2><span class="section-icon">📚</span> Resources</h2>
+                <ul>
+                    <li>
+                        <a href="sitemap.html">HTML Sitemap</a>
+                        <div class="sitemap-description">This page - complete site navigation</div>
+                    </li>
+                    <li>
+                        <a href="sitemap.xml">XML Sitemap</a>
+                        <div class="sitemap-description">For search engines</div>
+                    </li>
+                    <li>
+                        <a href="robots.txt">Robots.txt</a>
+                        <div class="sitemap-description">Search engine crawling instructions</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact & Support -->
+            <div class="sitemap-section">
+                <h2><span class="section-icon">📧</span> Contact</h2>
+                <ul>
+                    <li>
+                        <a href="mailto:info@aerohub.it">Email: info@aerohub.it</a>
+                        <div class="sitemap-description">Direct contact for all inquiries</div>
+                    </li>
+                    <li>
+                        <a href="index.html#contact">Contact Section</a>
+                        <div class="sitemap-description">Personal and confidential service</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Service Details -->
+            <div class="sitemap-section">
+                <h2><span class="section-icon">🛩️</span> Charter Types</h2>
+                <ul>
+                    <li>
+                        <a href="charter-flights.html#cargo">Cargo Charters</a>
+                        <div class="sitemap-description">Time-critical & specialized freight</div>
+                    </li>
+                    <li>
+                        <a href="charter-flights.html#passenger">Passenger Charters</a>
+                        <div class="sitemap-description">Corporate & group transportation</div>
+                    </li>
+                    <li>
+                        <a href="charter-flights.html#vip">VIP & Executive</a>
+                        <div class="sitemap-description">Luxury configured aircraft</div>
+                    </li>
+                    <li>
+                        <a href="charter-flights.html#specialized">Specialized Missions</a>
+                        <div class="sitemap-description">Medevac, humanitarian & defense</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- About -->
+            <div class="sitemap-section">
+                <h2><span class="section-icon">ℹ️</span> About</h2>
+                <ul>
+                    <li>
+                        <a href="index.html#about">About AeroHub</a>
+                        <div class="sitemap-description">Senior aviation specialist with global reach</div>
+                    </li>
+                    <li>
+                        <a href="index.html#services">Core Services Overview</a>
+                        <div class="sitemap-description">Complete service portfolio</div>
+                    </li>
+                    <li>
+                        <a href="index.html#aviation-snapshot">Aviation Snapshot</a>
+                        <div class="sitemap-description">Live global flight data & statistics</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="back-to-home">
+            <a href="index.html">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div w3-include-html="partials/footer.html"></div>
+
+    <!-- DARK MODE TOGGLE -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+
+    <!-- SCRIPTS -->
+    <script src="js/main.js" defer></script>
+    <script>
+        // === INCLUDE PARTIALS + INIT APP ===
+        function includeHTML() {
+            const elements = document.querySelectorAll('[w3-include-html]');
+            if (elements.length === 0) {
+                initApp();
+                return;
+            }
+
+            let loaded = 0;
+            elements.forEach(el => {
+                const file = el.getAttribute('w3-include-html');
+                fetch(file)
+                    .then(res => {
+                        if (!res.ok) throw new Error(`${file} not found`);
+                        return res.text();
+                    })
+                    .then(data => {
+                        el.innerHTML = data;
+                        el.removeAttribute('w3-include-html');
+                        loaded++;
+                        if (loaded === elements.length) {
+                            initApp();
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        el.innerHTML = `<p style="color:red">Error: ${file}</p>`;
+                        loaded++;
+                        if (loaded === elements.length) initApp();
+                    });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', includeHTML);
+    </script>
+</body>
+</html>
