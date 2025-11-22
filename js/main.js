@@ -232,11 +232,17 @@ function initApp() {
         } catch (e) {
             console.warn('Map update failed', e);
         }
-        setTimeout(updateMap, 30000);
+        // Reduced map polling from 30s to 60s for better performance
+        setTimeout(updateMap, 60000);
     }
 
     // === START EVERYTHING ===
-    updateLive();
-    setInterval(updateLive, 60000);
-    initMap();
+    // Check if map element exists before initializing (only on index page)
+    const mapElement = document.getElementById('liveMap');
+    if (mapElement) {
+        updateLive();
+        // Reduced polling from 60s to 120s for better performance
+        setInterval(updateLive, 120000);
+        initMap();
+    }
 }

@@ -12,12 +12,17 @@
     <meta property="og:image" content="images/hero.jpg">
     <meta name="twitter:card" content="summary_large_image">
     
+    <!-- Performance -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Favicon -->
     <link rel="icon" href="aerohub_new_black.png" type="image/png">
     <link rel="apple-touch-icon" href="aerohub_new_black.png">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Optimized Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <!-- Your Styles -->
     <link rel="stylesheet" href="css/style.css">
@@ -88,7 +93,7 @@
     <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
 
     <!-- SCRIPTS -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
     <script>
         // === INCLUDE PARTIALS + INIT APP ===
         function includeHTML() {

@@ -12,16 +12,30 @@
     <meta property="og:image" content="images/hero.jpg">
     <meta name="twitter:card" content="summary_large_image">
     
+    <!-- Performance & Cache Control -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://opensky-network.org">
+    <link rel="dns-prefetch" href="https://corsproxy.io">
+    
     <!-- Favicon -->
     <link rel="icon" href="aerohub_new_black.png" type="image/png">
     <link rel="apple-touch-icon" href="aerohub_new_black.png">
     
-    <!-- Leaflet + Fonts -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Optimized Fonts with font-display: swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Your Styles -->
+    <!-- Critical CSS (inline later if needed) -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Leaflet CSS - defer non-critical -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /></noscript>
 </head>
 <body data-theme="light">
 
@@ -35,7 +49,7 @@
             <!-- Complex Charter Flights -->
             <div class="service-card">
                 <div class="service-img">
-                    <img src="images/charter.jpg" alt="VIP Charter Jet in Flight">
+                    <img src="images/charter.jpg" alt="VIP Charter Jet in Flight" loading="lazy" decoding="async">
                 </div>
                 <div class="service-content">
                     <h3><a href="charter-flights.html" style="color:inherit;text-decoration:none;">Complex Charter Flights</a></h3>
@@ -46,7 +60,7 @@
             <!-- Wet Lease / ACMI -->
             <div class="service-card">
                 <div class="service-img">
-                    <img src="images/acmi.jpg" alt="Commercial Jet on Tarmac">
+                    <img src="images/acmi.jpg" alt="Commercial Jet on Tarmac" loading="lazy" decoding="async">
                 </div>
                 <div class="service-content">
                     <h3><a href="wet-lease-acmi.html" style="color:inherit;text-decoration:none;">Wet Lease / ACMI</a></h3>
@@ -57,7 +71,7 @@
             <!-- Dry Lease -->
             <div class="service-card">
                 <div class="service-img">
-                    <img src="images/dry-lease.jpg" alt="Aircraft Ready for Dry Lease">
+                    <img src="images/dry-lease.jpg" alt="Aircraft Ready for Dry Lease" loading="lazy" decoding="async">
                 </div>
                 <div class="service-content">
                     <h3><a href="dry-lease.html" style="color:inherit;text-decoration:none;">Dry Lease</a></h3>
@@ -68,7 +82,7 @@
             <!-- Strategic Consultancy -->
             <div class="service-card">
                 <div class="service-img">
-                    <img src="images/consultancy.jpg" alt="Aviation Strategy & Planning">
+                    <img src="images/consultancy.jpg" alt="Aviation Strategy & Planning" loading="lazy" decoding="async">
                 </div>
                 <div class="service-content">
                     <h3><a href="consultancy.html" style="color:inherit;text-decoration:none;">Strategic Consultancy</a></h3>
@@ -112,9 +126,9 @@
     <!-- DARK MODE TOGGLE -->
     <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
 
-    <!-- SCRIPTS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/main.js"></script>
+    <!-- SCRIPTS - Deferred for performance -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+    <script src="js/main.js" defer></script>
     <script>
         // === INCLUDE PARTIALS + INIT APP ===
         function includeHTML() {
