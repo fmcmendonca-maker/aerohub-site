@@ -50,10 +50,17 @@
 </head>
 <body data-theme="light">
 
-    <!-- HEADER -->
-    <div w3-include-html="partials/header.html"></div>
+    <!-- Navigation Buttons -->
+    <div style="position:fixed;top:20px;left:20px;z-index:1001;display:flex;gap:10px;flex-wrap:wrap;max-width:calc(100% - 40px);">
+        <a href="index.html" style="background:var(--accent);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">🏠 Home</a>
+        <a href="charter-flights.html" style="background:var(--primary);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">Charters</a>
+        <a href="wet-lease-acmi.html" style="background:var(--primary);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">Wet Lease</a>
+        <a href="dry-lease.html" style="background:var(--primary);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">Dry Lease</a>
+    </div>
 
-    <!-- CONSULTANCY HERO -->
+    <!-- MAIN CONTENT -->
+    <main>
+    <!-- SERVICE HERO -->
     <section class="consultancy-hero">
         <div class="container">
             <div class="consultancy-header">

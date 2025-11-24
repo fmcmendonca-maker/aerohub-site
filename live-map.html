@@ -43,6 +43,15 @@
             padding: 20px;
             text-align: center;
             border-bottom: 3px solid var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        [data-theme="dark"] .map-header {
+            background: #0f172a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
         
         .map-header h1 {
@@ -55,22 +64,29 @@
             opacity: 0.9;
         }
         
-        .back-button {
+        .nav-buttons {
             position: fixed;
             top: 20px;
             left: 20px;
-            z-index: 1000;
+            z-index: 1001;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
             background: var(--accent);
             color: white;
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
+            font-size: 0.9rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
         
-        .back-button:hover {
+        .nav-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(244, 124, 32, 0.4);
         }
@@ -84,7 +100,7 @@
         }
         
         .map-card {
-            background: white;
+            background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             overflow: hidden;
@@ -92,11 +108,13 @@
             max-width: 1400px;
             height: calc(100vh - 200px);
             min-height: 600px;
+            border: 1px solid var(--border);
         }
         
         [data-theme="dark"] .map-card {
-            background: var(--secondary);
+            background: #1e293b;
             box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border-color: #334155;
         }
         
         #liveMapFullscreen {
@@ -151,11 +169,16 @@
                 font-size: 1.5rem;
             }
             
-            .back-button {
+            .nav-buttons {
                 top: 10px;
                 left: 10px;
-                padding: 10px 16px;
-                font-size: 0.9rem;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
             
             .map-stats {
@@ -170,9 +193,9 @@
 <body data-theme="light">
     <main>
     <div class="map-page-container">
-        <div style="position:fixed;top:20px;left:20px;z-index:1000;display:flex;gap:10px;flex-wrap:wrap;">
-            <a href="/" class="back-button" style="margin:0;">🏠 Home</a>
-            <a href="aviation-snapshot.html" class="back-button" style="margin:0;background:var(--primary);">📊 Snapshot</a>
+        <div class="nav-buttons">
+            <a href="/" class="nav-button">🏠 Home</a>
+            <a href="aviation-snapshot.html" class="nav-button">📊 Snapshot</a>
         </div>
         
         <div class="map-header">

@@ -1,19 +1,200 @@
 <!-- partials/snapshot.html -->
 <section class="aviation-snapshot">
-    <div class="container">
-        <h2>Global Aviation Data</h2>
+    <div class="container" style="position:relative;">
+        <span style="position:absolute;top:-20px;right:20px;display:inline-block;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;padding:8px 18px;border-radius:20px;font-size:0.75rem;font-weight:700;animation:pulse 2s ease-in-out infinite;letter-spacing:0.5px;box-shadow:0 4px 12px rgba(16,185,129,0.3);z-index:10;">● LIVE DATA</span>
+        <h2>Live Flight Intelligence</h2>
         <p style="text-align:center;margin-bottom:40px;color:var(--gray);font-size:1.1rem;">
-            Real-time commercial flights • Regional statistics • Environmental impact
+            Watch flights live, discover global traffic patterns, and understand aviation's footprint—quick and simple.
         </p>
 
-        <!-- Buttons side by side -->
-        <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;padding:40px 0;">
-            <a href="aviation-snapshot.html" class="cta-button" style="text-decoration:none;">
-                View Aviation Snapshot
+        <!-- Enhanced CTA Buttons with micro-interactions -->
+        <div class="aviation-cta-container">
+            <a href="aviation-snapshot.html" class="aviation-cta-btn secondary">
+                <span class="cta-icon">📊</span>
+                <span class="cta-content">
+                    <span class="cta-title">Explore Today's Aviation Snapshot</span>
+                    <span class="cta-subtitle">Today's flight stats at a glance</span>
+                </span>
             </a>
-            <a href="live-map.html" class="cta-button" style="text-decoration:none;">
-                View Live Flight Map
+            <a href="live-map.html" class="aviation-cta-btn primary">
+                <span class="cta-icon">✈️</span>
+                <span class="cta-content">
+                    <span class="cta-title">Watch Live Flights in Real Time</span>
+                    <span class="cta-subtitle">Interactive real-time world map</span>
+                </span>
             </a>
         </div>
     </div>
 </section>
+
+<style>
+/* Pulse animation for LIVE DATA badge */
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+}
+
+/* Enhanced Aviation CTA Buttons */
+.aviation-cta-container {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 40px 0;
+    position: relative;
+}
+
+/* Subtle background animation */
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.aviation-cta-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 2px solid transparent;
+    min-width: 320px;
+    background-size: 200% 200%;
+}
+
+/* Primary button (Live Map - Orange dominant) */
+.aviation-cta-btn.primary {
+    background: linear-gradient(135deg, #F47C20 0%, #ff9d5c 50%, #F47C20 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(244, 124, 32, 0.35);
+    animation: gradientShift 8s ease infinite;
+}
+
+.aviation-cta-btn.primary:hover {
+    transform: scale(1.04) translateY(-2px);
+    box-shadow: 0 16px 40px rgba(244, 124, 32, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Secondary button (Snapshot - Softer style) */
+.aviation-cta-btn.secondary {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+    color: var(--primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .aviation-cta-btn.secondary {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+    color: var(--primary);
+    border-color: var(--border);
+}
+
+.aviation-cta-btn.secondary:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+    border-color: var(--accent);
+}
+
+[data-theme="dark"] .aviation-cta-btn.secondary:hover {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 1) 0%, rgba(51, 65, 85, 1) 100%);
+}
+
+/* Icon animation */
+.cta-icon {
+    font-size: 2rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aviation-cta-btn:hover .cta-icon {
+    transform: translateX(4px) rotate(5deg);
+}
+
+/* Content layout */
+.cta-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+
+.cta-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    display: block;
+}
+
+.cta-subtitle {
+    font-size: 0.85rem;
+    font-weight: 400;
+    opacity: 0.85;
+    line-height: 1.2;
+    display: block;
+}
+
+.aviation-cta-btn.primary .cta-subtitle {
+    opacity: 0.9;
+}
+
+/* Pulsing glow effect on primary button */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 8px 24px rgba(244, 124, 32, 0.35); }
+    50% { box-shadow: 0 12px 32px rgba(244, 124, 32, 0.45); }
+}
+
+.aviation-cta-btn.primary {
+    animation: gradientShift 8s ease infinite, pulseGlow 3s ease-in-out infinite;
+}
+
+.aviation-cta-btn.primary:hover {
+    animation: gradientShift 8s ease infinite;
+}
+
+/* Active state */
+.aviation-cta-btn:active {
+    transform: scale(0.98);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .aviation-cta-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+    
+    .aviation-cta-btn {
+        min-width: 280px;
+        padding: 20px 24px;
+    }
+    
+    .cta-icon {
+        font-size: 1.75rem;
+    }
+    
+    .cta-title {
+        font-size: 0.95rem;
+    }
+    
+    .cta-subtitle {
+        font-size: 0.8rem;
+    }
+}
+</style>

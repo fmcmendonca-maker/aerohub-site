@@ -24,12 +24,10 @@
     <meta http-equiv="Cache-Control" content="public, max-age=31536000">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-    <!-- Resource Hints -->
+    <!-- Resource Hints - Preconnect to critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="dns-prefetch" href="https://opensky-network.org">
-    <link rel="dns-prefetch" href="https://corsproxy.io">
     
     <!-- Favicon -->
     <link rel="icon" href="aerohub_new_black.png" type="image/png">
@@ -41,17 +39,24 @@
     <!-- Preload critical CSS -->
     <link rel="preload" href="css/style.css" as="style">
     
-    <!-- Optimized Fonts with font-display: swap -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Preload critical fonts to reduce LCP -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Optimized Fonts - Async loading with display=swap -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"></noscript>
+    
     <style>
-        /* Fallback fonts to prevent CLS during font load */
-        @font-face {
-            font-family: 'Inter-fallback';
-            size-adjust: 100%;
-            src: local('Arial');
-        }
+        /* Critical CSS - Fallback fonts to prevent CLS */
         body {
-            font-family: 'Inter', 'Inter-fallback', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        /* Reserve space for header to prevent CLS */
+        header {
+            min-height: 500px;
         }
     </style>
     
@@ -70,93 +75,137 @@
         <h2>Core Services</h2>
         <div class="services-grid">
             <!-- Complex Charter Flights -->
-            <div class="service-card">
-                <div class="service-img">
-                    <picture>
-                        <source type="image/webp" srcset="images/charter.webp" media="(min-width: 1px)">
-                        <img src="images/charter.jpg" 
-                             srcset="images/charter.jpg 371w"
-                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 371px"
-                             alt="VIP Charter Jet in Flight" 
-                             width="371" 
-                             height="247" 
-                             loading="eager" 
-                             fetchpriority="high" 
-                             decoding="async"
-                             style="aspect-ratio: 371/247;">
-                    </picture>
+            <a href="charter-flights.html" style="text-decoration:none;color:inherit;display:block;">
+                <div class="service-card" style="cursor:pointer;">
+                    <div class="service-img" style="height: 200px;">
+                        <picture>
+                            <source type="image/webp" srcset="images/charter.webp" media="(min-width: 1px)">
+                            <img src="images/charter.jpg" 
+                                 srcset="images/charter.jpg 371w"
+                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 371px"
+                                 alt="VIP Charter Jet in Flight" 
+                                 width="371" 
+                                 height="247" 
+                                 loading="eager" 
+                                 fetchpriority="high" 
+                                 decoding="async"
+                                 style="aspect-ratio: 371/247; display: block;">
+                        </picture>
+                    </div>
+                    <div class="service-content">
+                        <h3>Complex Charter Flights</h3>
+                        <p>Global cargo, passenger, VIP, medevac, and special mission charters. Precision execution for the most challenging requirements.</p>
+                    </div>
                 </div>
-                <div class="service-content">
-                    <h3><a href="charter-flights.html" style="color:inherit;text-decoration:none;">Complex Charter Flights</a></h3>
-                    <p>Global cargo, passenger, VIP, medevac, and special mission charters. Precision execution for the most challenging requirements.</p>
-                </div>
-            </div>
+            </a>
 
             <!-- Wet Lease / ACMI -->
-            <div class="service-card">
-                <div class="service-img">
-                    <picture>
-                        <source type="image/webp" srcset="images/acmi.webp" media="(min-width: 1px)">
-                        <img src="images/acmi.jpg" 
-                             srcset="images/acmi.jpg 371w"
-                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 371px"
-                             alt="Commercial Jet on Tarmac" 
-                             width="371" 
-                             height="207" 
-                             loading="lazy" 
-                             decoding="async"
-                             style="aspect-ratio: 371/207;">
-                    </picture>
+            <a href="wet-lease-acmi.html" style="text-decoration:none;color:inherit;display:block;">
+                <div class="service-card" style="cursor:pointer;">
+                    <div class="service-img" style="height: 200px;">
+                        <picture>
+                            <source type="image/webp" srcset="images/acmi.webp" media="(min-width: 1px)">
+                            <img src="images/acmi.jpg" 
+                                 srcset="images/acmi.jpg 371w"
+                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 371px"
+                                 alt="Commercial Jet on Tarmac" 
+                                 width="371" 
+                                 height="207" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 style="aspect-ratio: 371/207; display: block;">
+                        </picture>
+                    </div>
+                    <div class="service-content">
+                        <h3>Wet Lease / ACMI</h3>
+                        <p>Aircraft + Crew + Maintenance + Insurance. Immediate capacity solutions with full operational control and support.</p>
+                    </div>
                 </div>
-                <div class="service-content">
-                    <h3><a href="wet-lease-acmi.html" style="color:inherit;text-decoration:none;">Wet Lease / ACMI</a></h3>
-                    <p>Aircraft + Crew + Maintenance + Insurance. Immediate capacity solutions with full operational control and support.</p>
-                </div>
-            </div>
+            </a>
 
             <!-- Dry Lease -->
+            <a href="dry-lease.html" style="text-decoration:none;color:inherit;display:block;">
+                <div class="service-card" style="cursor:pointer;">
+                    <div class="service-img" style="height: 200px;">
+                        <picture>
+                            <source type="image/webp" srcset="images/dry-lease.webp" media="(min-width: 1px)">
+                            <img src="images/dry-lease.jpg" 
+                                 srcset="images/dry-lease.jpg 430w"
+                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 430px"
+                                 alt="Aircraft Ready for Dry Lease" 
+                                 width="430" 
+                                 height="200" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 style="aspect-ratio: 430/200; object-fit: cover; display: block;">
+                        </picture>
+                    </div>
+                    <div class="service-content">
+                        <h3>Dry Lease</h3>
+                        <p>Long-term aircraft placement without crew. Strategic fleet expansion and financial optimization tailored to your needs.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Strategic Consultancy -->
+            <a href="consultancy.html" style="text-decoration:none;color:inherit;display:block;">
+                <div class="service-card" style="cursor:pointer;">
+                    <div class="service-img" style="height: 200px;">
+                        <picture>
+                            <source type="image/webp" srcset="images/consultancy.webp" media="(min-width: 1px)">
+                            <img src="images/consultancy.jpg" 
+                                 srcset="images/consultancy.jpg 371w"
+                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 371px"
+                                 alt="Aviation Strategy & Planning" 
+                                 width="371" 
+                                 height="247" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 style="aspect-ratio: 371/247; display: block;">
+                        </picture>
+                    </div>
+                    <div class="service-content">
+                        <h3>Strategic Consultancy</h3>
+                        <p>Fleet planning, acquisitions, sales, market entry, and operational optimization — delivered with deep expertise and discretion.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Live AC Availability -->
             <div class="service-card">
-                <div class="service-img">
+                <div class="service-img" style="height: 200px; position: relative;">
+                    <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #f97316, #fb923c); color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; z-index: 10;">🚧 Q1 2026</div>
                     <picture>
-                        <source type="image/webp" srcset="images/dry-lease.webp" media="(min-width: 1px)">
-                        <img src="images/dry-lease.jpg" 
-                             srcset="images/dry-lease.jpg 430w"
-                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 430px"
-                             alt="Aircraft Ready for Dry Lease" 
-                             width="430" 
+                        <source type="image/webp" srcset="images/AC_avail.webp" media="(min-width: 1px)">
+                        <img src="images/AC_avail.webp" 
+                             alt="Live Aircraft Availability Dashboard" 
+                             width="371" 
                              height="200" 
                              loading="lazy" 
                              decoding="async"
-                             style="aspect-ratio: 430/200; object-fit: cover;">
+                             style="aspect-ratio: 371/200; object-fit: cover; display: block;">
                     </picture>
                 </div>
                 <div class="service-content">
-                    <h3><a href="dry-lease.html" style="color:inherit;text-decoration:none;">Dry Lease</a></h3>
-                    <p>Long-term aircraft placement without crew. Strategic fleet expansion and financial optimization tailored to your needs.</p>
+                    <h3 style="color:var(--primary);">Live AC Availability</h3>
+                    <p style="font-size: 0.85rem; color: var(--gray); font-weight: 600; margin-bottom: 12px;">Under Construction • Live 1st Quarter 2026</p>
+                    <p>Real-time aircraft availability tracking with instant fleet status, location data, and immediate booking capabilities worldwide.</p>
                 </div>
             </div>
 
-            <!-- Strategic Consultancy -->
-            <div class="service-card">
-                <div class="service-img">
-                    <picture>
-                        <source type="image/webp" srcset="images/consultancy.webp" media="(min-width: 1px)">
-                        <img src="images/consultancy.jpg" 
-                             srcset="images/consultancy.jpg 371w"
-                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 371px"
-                             alt="Aviation Strategy & Planning" 
-                             width="371" 
-                             height="247" 
-                             loading="lazy" 
-                             decoding="async"
-                             style="aspect-ratio: 371/247;">
-                    </picture>
+            <!-- Aviation Suite -->
+            <a href="login.html" style="text-decoration:none;color:inherit;display:block;">
+                <div class="service-card" style="cursor:pointer;">
+                    <div class="service-img" style="height: 200px; background: linear-gradient(135deg, #F47C20 0%, #ff9d5c 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #F47C20; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">🔒 SECURE</div>
+                        <div style="font-size: 4rem; opacity: 0.95; color: #fff;">📊</div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Aviation Suite</h3>
+                        <p>Secure client portal with real-time aircraft availability, live contract tracking, fleet performance dashboards, and exclusive market insights.</p>
+                    </div>
                 </div>
-                <div class="service-content">
-                    <h3><a href="consultancy.html" style="color:inherit;text-decoration:none;">Strategic Consultancy</a></h3>
-                    <p>Fleet planning, acquisitions, sales, market entry, and operational optimization — delivered with deep expertise and discretion.</p>
-                </div>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -174,7 +223,7 @@
     <section class="container">
         <div class="private-login">
             <h2>AeroHub Aviation Suite</h2>
-            <p>Secure client portal with real-time aircraft availability, live contract tracking, fleet performance dashboards, and exclusive market insights.</p>
+            <p style="max-width:800px;margin:0 auto 24px auto;">Secure client portal with real-time aircraft availability, live contract tracking, fleet performance dashboards, and exclusive market insights.</p>
             <a href="login.html" class="login-btn">Secure Login</a>
         </div>
     </section>
