@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 
-                <div class="login-form-container">
+                <div class="login-form-container" id="loginFormContainer">
                     <form class="login-form" id="loginForm">
                         <div class="form-group">
                             <label for="username">Username</label>
@@ -100,11 +100,63 @@
                             <span class="btn-loading" style="display: none;">Authenticating...</span>
                         </button>
                         
+                        <div id="errorMessage" style="display:none;background:#fee;border:1px solid #fcc;color:#c33;padding:16px;border-radius:8px;margin-top:16px;text-align:center;font-size:0.95rem;">
+                            <strong>❌ Not Authorized</strong><br>
+                            Contact Filipe to get your credentials<br>
+                            <a href="mailto:info@aerohub.it" style="color:#c33;text-decoration:underline;">info@aerohub.it</a>
+                        </div>
+                        
+                        <button type="button" id="registerBtn" class="register-btn" style="display:none;margin-top:16px;background:var(--accent);color:#fff;padding:14px 24px;border:none;border-radius:8px;font-weight:600;cursor:pointer;width:100%;transition:all 0.3s ease;">
+                            📝 Do you wish to register?
+                        </button>
+                        
                         <div class="login-links">
                             <a href="#" class="forgot-password">Forgot your password?</a>
                             <span class="separator">•</span>
                             <a href="mailto:info@aerohub.it" class="contact-support">Contact Support</a>
                         </div>
+                    </form>
+                </div>
+                
+                <!-- REGISTRATION FORM (hidden by default) -->
+                <div class="login-form-container" id="registerFormContainer" style="display:none;">
+                    <div style="text-align:center;margin-bottom:24px;">
+                        <h2 style="font-size:1.5rem;margin-bottom:8px;color:var(--primary);">Request Access</h2>
+                        <p style="color:var(--gray);font-size:0.95rem;">Fill out the form below and we'll contact you shortly</p>
+                    </div>
+                    <form class="login-form" id="registerForm" action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="98b9116a-9ba9-4d4b-9f5f-c1d6f3392a85">
+                        <input type="hidden" name="subject" value="New AeroHub Aviation Suite Registration Request">
+                        <input type="hidden" name="from_name" value="AeroHub Registration">
+                        
+                        <div class="form-group">
+                            <label for="regName">Full Name *</label>
+                            <input type="text" id="regName" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regEmail">Email *</label>
+                            <input type="email" id="regEmail" name="email" required autocomplete="email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regContact">Phone / Contact</label>
+                            <input type="text" id="regContact" name="contact">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regCompany">Company</label>
+                            <input type="text" id="regCompany" name="company">
+                        </div>
+                        
+                        <button type="submit" class="login-btn">
+                            <span class="btn-text">Submit Registration Request</span>
+                            <span class="btn-loading" style="display: none;">Sending...</span>
+                        </button>
+                        
+                        <button type="button" id="backToLogin" style="margin-top:16px;background:transparent;color:var(--primary);padding:12px;border:1px solid var(--border);border-radius:8px;font-weight:600;cursor:pointer;width:100%;transition:all 0.3s ease;">
+                            ← Back to Login
+                        </button>
                     </form>
                 </div>
             </div>
@@ -166,8 +218,16 @@
         // === LOGIN FUNCTIONALITY ===
         function initLogin() {
             const form = document.getElementById('loginForm');
+            const registerBtn = document.getElementById('registerBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const loginContainer = document.getElementById('loginFormContainer');
+            const registerContainer = document.getElementById('registerFormContainer');
+            const registerForm = document.getElementById('registerForm');
+            const backToLoginBtn = document.getElementById('backToLogin');
+            
             if (!form) return;
 
+            // Handle login form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -180,17 +240,85 @@
                 btnLoading.style.display = 'inline';
                 btn.disabled = true;
                 
-                // Simulate authentication (replace with real auth)
+                // Simulate authentication check
                 setTimeout(() => {
                     // Reset button state
                     btnText.style.display = 'inline';
                     btnLoading.style.display = 'none';
                     btn.disabled = false;
                     
-                    // Show demo message (replace with real redirect)
-                    alert('Demo Login: In production, this would authenticate and redirect to the Aviation Suite dashboard.');
-                }, 2000);
+                    // Show error message and register button
+                    errorMessage.style.display = 'block';
+                    registerBtn.style.display = 'block';
+                }, 1500);
             });
+            
+            // Handle register button click
+            if (registerBtn) {
+                registerBtn.addEventListener('click', function() {
+                    loginContainer.style.display = 'none';
+                    registerContainer.style.display = 'block';
+                });
+            }
+            
+            // Handle back to login
+            if (backToLoginBtn) {
+                backToLoginBtn.addEventListener('click', function() {
+                    registerContainer.style.display = 'none';
+                    loginContainer.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    registerBtn.style.display = 'none';
+                });
+            }
+            
+            // Handle registration form submission
+            if (registerForm) {
+                registerForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const btn = registerForm.querySelector('.login-btn');
+                    const btnText = btn.querySelector('.btn-text');
+                    const btnLoading = btn.querySelector('.btn-loading');
+                    
+                    // Show loading state
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'inline';
+                    btn.disabled = true;
+                    
+                    try {
+                        // Submit form data to Web3Forms
+                        const formData = new FormData(registerForm);
+                        const response = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            // Show success message
+                            alert('✅ Registration request submitted!\n\nThank you for your interest. Filipe will review your request and contact you shortly at:\n' + formData.get('email'));
+                            
+                            // Reset form and go back to login
+                            registerForm.reset();
+                            registerContainer.style.display = 'none';
+                            loginContainer.style.display = 'block';
+                            errorMessage.style.display = 'none';
+                            registerBtn.style.display = 'none';
+                        } else {
+                            alert('❌ Error submitting form. Please try again or contact info@aerohub.it directly.');
+                        }
+                    } catch (error) {
+                        alert('❌ Error submitting form. Please try again or contact info@aerohub.it directly.');
+                        console.error('Form submission error:', error);
+                    } finally {
+                        // Reset button state
+                        btnText.style.display = 'inline';
+                        btnLoading.style.display = 'none';
+                        btn.disabled = false;
+                    }
+                });
+            }
         }
 
         document.addEventListener('DOMContentLoaded', includeHTML);
