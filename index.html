@@ -56,7 +56,7 @@
         }
         /* Reserve space for header to prevent CLS */
         header {
-            min-height: 500px;
+            min-height: 200px;
         }
     </style>
     
@@ -175,6 +175,7 @@
             <div class="service-card">
                 <div class="service-img" style="height: 200px; position: relative;">
                     <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #f97316, #fb923c); color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; z-index: 10;">🚧 Q1 2026</div>
+                    <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.75); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; z-index: 10; white-space: nowrap;">Under Construction • Live 1st Quarter 2026</div>
                     <picture>
                         <source type="image/webp" srcset="images/AC_avail.webp" media="(min-width: 1px)">
                         <img src="images/AC_avail.webp" 
@@ -188,7 +189,6 @@
                 </div>
                 <div class="service-content">
                     <h3 style="color:var(--primary);">Live AC Availability</h3>
-                    <p style="font-size: 0.85rem; color: var(--gray); font-weight: 600; margin-bottom: 12px;">Under Construction • Live 1st Quarter 2026</p>
                     <p>Real-time aircraft availability tracking with instant fleet status, location data, and immediate booking capabilities worldwide.</p>
                 </div>
             </div>
@@ -243,7 +243,7 @@
     <div w3-include-html="partials/footer.html"></div>
 
     <!-- DARK MODE TOGGLE -->
-    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</div>
 
     <!-- SCRIPTS - Deferred for performance -->
     <script src="js/main.js" defer></script>

@@ -51,12 +51,26 @@
 <body data-theme="light">
 
     <!-- Navigation Buttons -->
-    <div style="position:fixed;top:20px;left:20px;z-index:1001;display:flex;gap:10px;flex-wrap:wrap;max-width:calc(100% - 40px);">
-        <a href="index.html" style="background:var(--accent);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">🏠 Home</a>
-        <a href="charter-flights.html" style="background:var(--primary);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">Charters</a>
-        <a href="dry-lease.html" style="background:var(--primary);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">Dry Lease</a>
-        <a href="consultancy.html" style="background:var(--primary);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">Consultancy</a>
+    <div style="position:fixed;top:20px;left:20px;z-index:1001;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 40px);">
+        <a href="index.html" style="background:#f97316;color:#ffffff;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.8rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">🏠 Home</a>
+        <a href="aviation-snapshot.html" style="background:#f97316;color:#ffffff;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.8rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">📊 Snapshot</a>
+        <a href="live-map.html" style="background:#f97316;color:#ffffff;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.8rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all 0.3s ease;white-space:nowrap;">✈️ Live Map</a>
     </div>
+    <style>
+    @media (max-width: 768px) {
+        body > div:first-of-type {
+            top: 10px !important;
+            left: 10px !important;
+            right: 10px !important;
+            max-width: calc(100% - 80px) !important;
+            gap: 6px !important;
+        }
+        body > div:first-of-type a {
+            padding: 6px 10px !important;
+            font-size: 0.7rem !important;
+        }
+    }
+    </style>
 
     <!-- MAIN CONTENT -->
     <main>
@@ -343,7 +357,7 @@
 
     <!-- FOOTER -->
     <div w3-include-html="partials/footer.html"></div>    <!-- DARK MODE TOGGLE -->
-    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</div>
 
     <!-- SCRIPTS -->
     <script src="js/main.js" defer></script>

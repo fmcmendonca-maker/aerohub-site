@@ -14,14 +14,14 @@ function initApp() {
         logoImg.src = logo;
     }
     
-    if (toggle) toggle.textContent = savedTheme === 'dark' ? 'Sun' : 'Moon';
+    if (toggle) toggle.textContent = savedTheme === 'dark' ? '🌞' : '🌙';
 
     toggle?.addEventListener('click', () => {
         const isDark = body.getAttribute('data-theme') === 'dark';
         const newTheme = isDark ? 'light' : 'dark';
         body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        toggle.textContent = newTheme === 'dark' ? 'Sun' : 'Moon';
+        toggle.textContent = newTheme === 'dark' ? '🌞' : '🌙';
     });
 
     // === LIVE DATA & MAP ===
