@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Preload critical LCP image FIRST - before any other resources -->
+    <link rel="preload" as="image" href="images/hero.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero.jpg" type="image/jpeg" fetchpriority="high">
+    
     <title>AeroHub – Global Aviation, Charter & Aircraft Leasing</title>
     <meta name="description" content="AeroHub provides global charter flights, VIP travel, ACMI, wet & dry lease aircraft, and aviation consulting. Fast solutions, worldwide fleet access.">
     <link rel="canonical" href="https://aerohub.it/">
@@ -37,20 +42,29 @@
     <link rel="preload" href="css/style.css" as="style">
     
     <!-- Optimized Fonts with font-display: swap -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Fallback fonts to prevent CLS during font load */
+        @font-face {
+            font-family: 'Inter-fallback';
+            size-adjust: 100%;
+            src: local('Arial');
+        }
+        body {
+            font-family: 'Inter', 'Inter-fallback', system-ui, -apple-system, sans-serif;
+        }
+    </style>
     
     <!-- Critical CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Leaflet CSS - defer non-critical -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /></noscript>
 </head>
 <body data-theme="light">
 
     <!-- HEADER -->
     <div w3-include-html="partials/header.html"></div>
 
+    <!-- MAIN CONTENT -->
+    <main>
     <!-- SERVICES -->
     <section class="container">
         <h2>Core Services</h2>
@@ -113,7 +127,7 @@
                              height="200" 
                              loading="lazy" 
                              decoding="async"
-                             style="aspect-ratio: 430/200;">
+                             style="aspect-ratio: 430/200; object-fit: cover;">
                     </picture>
                 </div>
                 <div class="service-content">
@@ -170,9 +184,11 @@
         <div class="contact">
             <h2>Contact</h2>
             <p>All inquiries are handled personally and confidentially.</p>
-            <p><a href="mailto:info@aerohub.it" style="color:var(--accent);font-weight:600;">info@aerohub.it</a></p>
+            <p><a href="mailto:info@aerohub.it" style="color:#d35a0e;font-weight:600;text-decoration:underline;">info@aerohub.it</a></p>
         </div>
     </section>
+    </main>
+    <!-- End Main Content -->
 
     <!-- FOOTER -->
     <div w3-include-html="partials/footer.html"></div>
@@ -181,7 +197,6 @@
     <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
 
     <!-- SCRIPTS - Deferred for performance -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <script src="js/main.js" defer></script>
     
     <script>
