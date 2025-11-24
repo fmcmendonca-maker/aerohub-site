@@ -152,9 +152,16 @@ function initApp() {
     }
 
     // === LEAFLET MAP ===
-    let map, markers = L.layerGroup();
+    let map, markers;
 
     function initMap() {
+        // Check if Leaflet is loaded
+        if (typeof L === 'undefined') {
+            console.error('Leaflet not loaded yet');
+            return;
+        }
+        
+        markers = L.layerGroup();
         map = L.map('liveMap').setView([20, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap'
@@ -214,6 +221,19 @@ function initApp() {
         updateLive();
         // Reduced polling from 60s to 120s for better performance
         setInterval(updateLive, 120000);
-        initMap();
+        
+        // Wait for Leaflet to load before initializing map
+        if (typeof L !== 'undefined') {
+            initMap();
+        } else {
+            // Retry after a short delay if Leaflet isn't ready
+            setTimeout(() => {
+                if (typeof L !== 'undefined') {
+                    initMap();
+                } else {
+                    console.error('Leaflet library failed to load');
+                }
+            }, 500);
+        }
     }
 }
