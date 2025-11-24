@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://aerohub.it/live-map.html">
+    <title>Live Global Flight Map | AeroHub</title>
+    <meta name="description" content="Real-time global flight tracking map showing commercial aircraft positions, routes, and live aviation data worldwide.">
+    
+    <!-- Performance -->
+    <meta http-equiv="Cache-Control" content="public, max-age=3600">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://opensky-network.org">
+    <link rel="dns-prefetch" href="https://corsproxy.io">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="aerohub_new_grey.svg" type="image/svg+xml">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        .map-page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .map-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .map-header h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+        }
+        
+        .map-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(244, 124, 32, 0.4);
+        }
+        
+        .map-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .map-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 200px);
+            min-height: 600px;
+        }
+        
+        [data-theme="dark"] .map-card {
+            background: var(--secondary);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        #liveMapFullscreen {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .map-stats {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+        
+        [data-theme="dark"] .map-stats {
+            background: var(--secondary);
+            color: var(--light);
+        }
+        
+        .map-stats strong {
+            color: var(--accent);
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .loading-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 2000;
+        }
+        
+        .loading-indicator.hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .map-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .map-stats {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="map-page-container">
+        <div style="position:fixed;top:20px;left:20px;z-index:1000;display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="/" class="back-button" style="margin:0;">🏠 Home</a>
+            <a href="aviation-snapshot.html" class="back-button" style="margin:0;background:var(--primary);">📊 Snapshot</a>
+        </div>
+        
+        <div class="map-header">
+            <h1>🌍 Live Global Flight Map</h1>
+            <p>Real-time commercial aircraft tracking • Updates every 2 minutes</p>
+        </div>
+        
+        <div class="loading-indicator" id="loadingIndicator">
+            <h3>Loading live flight data...</h3>
+            <p style="color: var(--gray);">Please wait</p>
+        </div>
+        
+        <div class="map-container">
+            <div class="map-card">
+                <div id="liveMapFullscreen"></div>
+            </div>
+        </div>
+        
+        <div class="map-stats">
+            <strong id="aircraftCount">—</strong>
+            <div>Commercial aircraft tracked</div>
+            <div style="font-size:0.8rem;color:var(--gray);margin-top:5px;" id="lastUpdate">—</div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Theme toggle
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', savedTheme);
+        if (toggle) toggle.textContent = savedTheme === 'dark' ? 'Sun' : 'Moon';
+
+        toggle?.addEventListener('click', () => {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            toggle.textContent = newTheme === 'dark' ? 'Sun' : 'Moon';
+        });
+
+        // Map functionality
+        const OPENSKY = 'https://opensky-network.org/api/states/all';
+        let map, markers;
+        let retryDelay = 5000; // Start with 5 second delay
+
+        function isCommercialCallsign(cs) {
+            return cs && /^[A-Z]{3}\d+[A-Z]?$/.test(cs.trim());
+        }
+
+        function formatTime() {
+            return new Date().toLocaleTimeString();
+        }
+
+        async function initMap() {
+            // Hide loading indicator
+            setTimeout(() => {
+                document.getElementById('loadingIndicator').classList.add('hidden');
+            }, 2000);
+
+            markers = L.layerGroup();
+            map = L.map('liveMapFullscreen').setView([20, 0], 2);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            markers.addTo(map);
+            await updateMap();
+        }
+
+        async function updateMap() {
+            markers.clearLayers();
+            try {
+                console.log('Fetching flight data...');
+                
+                // Try direct fetch first (works on https sites)
+                let res;
+                try {
+                    res = await fetch(OPENSKY);
+                } catch (directError) {
+                    console.log('Direct fetch failed, trying with CORS proxy...');
+                    res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(OPENSKY));
+                }
+                
+                console.log('Response status:', res.status);
+                
+                if (res.status === 429) {
+                    // Rate limited - increase delay
+                    retryDelay = Math.min(retryDelay * 2, 300000); // Max 5 minutes
+                    document.getElementById('aircraftCount').textContent = '⏳';
+                    document.getElementById('lastUpdate').textContent = `Rate limited - Retrying in ${Math.round(retryDelay/1000)}s`;
+                    console.log(`Rate limited. Next retry in ${retryDelay}ms`);
+                    setTimeout(updateMap, retryDelay);
+                    return;
+                }
+                
+                if (res.ok) {
+                    retryDelay = 120000; // Reset to 2 minutes on success
+                    const data = await res.json();
+                    console.log('Total states:', data.states?.length);
+                    const commercialFlights = (data.states || []).filter(s => isCommercialCallsign(s[1]));
+                    console.log('Commercial flights:', commercialFlights.length);
+                    
+                    // Update stats
+                    document.getElementById('aircraftCount').textContent = commercialFlights.length.toLocaleString();
+                    document.getElementById('lastUpdate').textContent = 'Updated: ' + formatTime();
+                    
+                    commercialFlights.forEach(s => {
+                        const [lat, lon, heading] = [s[6], s[5], s[10]];
+                        if (lat && lon) {
+                            const color = '#F47C20';
+                            
+                            const aircraftIcon = L.divIcon({
+                                html: `<div style="
+                                    width: 16px; 
+                                    height: 16px; 
+                                    color: ${color}; 
+                                    font-size: 14px; 
+                                    text-align: center; 
+                                    line-height: 16px;
+                                    transform: rotate(${heading || 0}deg);
+                                    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+                                    transition: all 0.3s ease;
+                                ">✈</div>`,
+                                className: 'aircraft-icon',
+                                iconSize: [16, 16],
+                                iconAnchor: [8, 8]
+                            });
+                            
+                            L.marker([lat, lon], { icon: aircraftIcon })
+                                .addTo(markers)
+                                .bindPopup(`
+                                    <strong>Flight:</strong> ${s[1] || 'Unknown'}<br>
+                                    <strong>Heading:</strong> ${heading ? Math.round(heading) + '°' : 'Unknown'}<br>
+                                    <strong>Altitude:</strong> ${s[7] ? Math.round(s[7]) + 'm' : 'Unknown'}
+                                `);
+                        }
+                    });
+                    
+                    // Update every 2 minutes (reduced frequency to avoid rate limits)
+                    setTimeout(updateMap, retryDelay);
+                } else {
+                    console.error('API response not OK:', res.status);
+                    document.getElementById('lastUpdate').textContent = 'API Error - Retrying...';
+                    setTimeout(updateMap, 30000); // Retry in 30 seconds
+                }
+            } catch (e) {
+                console.error('Map update failed:', e);
+                document.getElementById('lastUpdate').textContent = 'Update failed - Retrying...';
+                setTimeout(updateMap, 30000); // Retry in 30 seconds
+            }
+        }
+
+        // Initialize when page loads
+        if (typeof L !== 'undefined') {
+            initMap();
+        } else {
+            setTimeout(() => {
+                if (typeof L !== 'undefined') {
+                    initMap();
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>

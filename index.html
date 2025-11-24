@@ -139,19 +139,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <script src="js/main.js" defer></script>
     
-    <!-- TrustLogo SSL Seal - Async loaded -->
-    <script type="text/javascript" async>
-    (function() {
-        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
-        var script = document.createElement('script');
-        script.src = tlJsHost + 'trustlogo/javascript/trustlogo.js';
-        script.async = true;
-        script.onload = function() {
-            TrustLogo("https://www.trustlogo.com/images/install/instantssl_trust_seal_md_159x42.png", "SC7", "none");
-        };
-        document.body.appendChild(script);
-    })();
-    </script>
     <script>
         // === INCLUDE PARTIALS + INIT APP ===
         function includeHTML() {
@@ -187,20 +174,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', includeHTML);
-    </script>
-    
-    <!-- TrustLogo SSL Seal - Async loaded -->
-    <script type="text/javascript">
-    (function() {
-        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
-        var script = document.createElement('script');
-        script.src = tlJsHost + 'trustlogo/javascript/trustlogo.js';
-        script.async = true;
-        script.onload = function() {
-            TrustLogo("https://www.trustlogo.com/images/install/instantssl_trust_seal_md_159x42.png", "SC7", "none");
-        };
-        document.head.appendChild(script);
-    })();
     </script>
 </body>
 </html>

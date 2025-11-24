@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://aerohub.it/aviation-snapshot.html">
+    <title>Global Aviation Snapshot | AeroHub</title>
+    <meta name="description" content="Real-time global aviation data showing live commercial flights, regional statistics, and worldwide aviation metrics updated every 2 minutes.">
+    
+    <!-- Performance -->
+    <meta http-equiv="Cache-Control" content="public, max-age=3600">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://opensky-network.org">
+    <link rel="dns-prefetch" href="https://api.allorigins.win">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="aerohub_new_grey.svg" type="image/svg+xml">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .snapshot-page-container {
+            min-height: 100vh;
+            background: var(--light);
+        }
+        
+        [data-theme="dark"] .snapshot-page-container {
+            background: var(--dark);
+        }
+        
+        .snapshot-header {
+            background: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .snapshot-header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 15px 0;
+        }
+        
+        .snapshot-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .nav-buttons {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            background: var(--accent);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(244, 124, 32, 0.4);
+        }
+        
+        .snapshot-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .status-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        [data-theme="dark"] .status-bar {
+            background: var(--secondary);
+        }
+        
+        .status-item {
+            text-align: center;
+        }
+        
+        .status-item .label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .status-item .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .snapshot-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        [data-theme="dark"] .snapshot-card {
+            background: var(--secondary);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        .snapshot-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .snapshot-card-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .snapshot-table-container {
+            overflow-x: auto;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .snapshot-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-buttons {
+                top: 10px;
+                left: 10px;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .status-bar {
+                gap: 10px;
+            }
+            
+            .status-item .value {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="snapshot-page-container">
+        <div class="nav-buttons">
+            <a href="/" class="nav-button">🏠 Home</a>
+            <a href="live-map.html" class="nav-button">🗺️ Live Map</a>
+        </div>
+        
+        <div class="snapshot-header">
+            <h1>✈️ Global Aviation Snapshot</h1>
+            <p>Real-time commercial flight data • Updates every 2 minutes • Powered by OpenSky Network</p>
+        </div>
+        
+        <div class="snapshot-content">
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="label">Last Update</div>
+                    <div class="value" id="lastUpdate">—</div>
+                </div>
+                <div class="status-item">
+                    <div class="label">Data Status</div>
+                    <div class="value" id="dataStatus">Loading...</div>
+                </div>
+                <div class="status-item">
+                    <div class="label">Next Refresh</div>
+                    <div class="value" id="nextRefresh">—</div>
+                </div>
+            </div>
+            
+            <div class="snapshot-card">
+                <div class="snapshot-card-header">
+                    <h2>Live Commercial Flights by Region</h2>
+                </div>
+                <div class="snapshot-table-container">
+                    <table class="snapshot-table">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>Live Airborne</th>
+                                <th>2025 So Far</th>
+                                <th>Busiest Airport (Yesterday)</th>
+                                <th>Busiest Airline (Yesterday)</th>
+                                <th>Peak Yesterday</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- North America -->
+                            <tr>
+                                <td class="region-name">North America</td>
+                                <td class="live-count" id="naCount">—</td>
+                                <td class="yearly" id="naYearly">—</td>
+                                <td class="stat">ATL – 2,500 deps</td>
+                                <td class="stat">Delta – 1,100 flts</td>
+                                <td class="stat">~<span id="naPeak">3,800</span> at 14:00 UTC</td>
+                            </tr>
+
+                            <!-- Europe -->
+                            <tr>
+                                <td class="region-name">Europe</td>
+                                <td class="live-count" id="euCount">—</td>
+                                <td class="yearly" id="euYearly">—</td>
+                                <td class="stat">LHR – 1,400 deps</td>
+                                <td class="stat">Ryanair – 250 flts</td>
+                                <td class="stat">~<span id="euPeak">2,600</span> at 12:00 UTC</td>
+                            </tr>
+
+                            <!-- Asia-Pacific -->
+                            <tr>
+                                <td class="region-name">Asia-Pacific</td>
+                                <td class="live-count" id="apCount">—</td>
+                                <td class="yearly" id="apYearly">—</td>
+                                <td class="stat">DXB – 1,300 deps</td>
+                                <td class="stat">China Southern – 320 flts</td>
+                                <td class="stat">~<span id="apPeak">2,900</span> at 16:00 UTC</td>
+                            </tr>
+
+                            <!-- Middle East -->
+                            <tr>
+                                <td class="region-name">Middle East</td>
+                                <td class="live-count" id="meCount">—</td>
+                                <td class="yearly" id="meYearly">—</td>
+                                <td class="stat">DOH – 1,100 deps</td>
+                                <td class="stat">Emirates – 280 flts</td>
+                                <td class="stat">~<span id="mePeak">1,200</span> at 15:00 UTC</td>
+                            </tr>
+
+                            <!-- South America -->
+                            <tr>
+                                <td class="region-name">South America</td>
+                                <td class="live-count" id="saCount">—</td>
+                                <td class="yearly" id="saYearly">—</td>
+                                <td class="stat">GRU – 1,000 deps</td>
+                                <td class="stat">LATAM – 220 flts</td>
+                                <td class="stat">~<span id="saPeak">1,000</span> at 13:00 UTC</td>
+                            </tr>
+
+                            <!-- Africa -->
+                            <tr>
+                                <td class="region-name">Africa</td>
+                                <td class="live-count" id="afCount">—</td>
+                                <td class="yearly" id="afYearly">—</td>
+                                <td class="stat">JNB – 800 deps</td>
+                                <td class="stat">Ethiopian – 150 flts</td>
+                                <td class="stat">~<span id="afPeak">700</span> at 14:00 UTC</td>
+                            </tr>
+
+                            <!-- Global Total -->
+                            <tr class="total-row">
+                                <td class="region-name"><strong>Global Total</strong></td>
+                                <td class="live-count" id="globalCount">—</td>
+                                <td class="yearly" id="globalYearly">—</td>
+                                <td class="stat"><strong>ATL – 2,500 deps</strong></td>
+                                <td class="stat"><strong>United – 1,200 flts</strong></td>
+                                <td class="stat"><strong>~<span id="globalPeak">12,300</span> at 14:00 UTC</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CO₂ Estimate -->
+            <div class="snapshot-card">
+                <div class="snapshot-card-header">
+                    <h2>Environmental Impact</h2>
+                </div>
+                <div class="co2-estimate" style="padding:40px;text-align:center;">
+                    <h4 style="margin-bottom:20px;font-size:1.3rem;">Global Aviation CO₂ Emissions (2025 YTD)</h4>
+                    <div class="value" id="co2Estimate" style="font-size:3rem;color:var(--accent);font-weight:700;margin-bottom:10px;">~1,000 Mt</div>
+                    <div class="note" style="color:var(--gray);">Est. from ~31M flights • Sustainable solutions available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">Moon</div>
+
+    <!-- Scripts -->
+    <script>
+        // Theme toggle
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', savedTheme);
+        if (toggle) toggle.textContent = savedTheme === 'dark' ? 'Sun' : 'Moon';
+
+        toggle?.addEventListener('click', () => {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            toggle.textContent = newTheme === 'dark' ? 'Sun' : 'Moon';
+        });
+
+        // Aviation data functionality
+        const OPENSKY = 'https://opensky-network.org/api/states/all';
+        let retryDelay = 5000;
+        let nextUpdateTime;
+
+        const BOUNDS = {
+            na: {minLat: 20, maxLat: 60, minLon: -130, maxLon: -50},
+            eu: {minLat: 34, maxLat: 72, minLon: -25, maxLon: 45},
+            ap: {minLat: -10, maxLat: 50, minLon: 100, maxLon: 180},
+            me: {minLat: 15, maxLat: 40, minLon: 25, maxLon: 65},
+            sa: {minLat: -55, maxLat: 15, minLon: -85, maxLon: -30},
+            af: {minLat: -35, maxLat: 37, minLon: -20, maxLon: 55}
+        };
+
+        const FALLBACK = {na: 3300, eu: 2200, ap: 2400, me: 1000, sa: 850, af: 570, global: 9500};
+
+        function isCommercialCallsign(cs) {
+            return cs && /^[A-Z]{3}\d+[A-Z]?$/.test(cs.trim());
+        }
+
+        function inBounds(state, bounds) {
+            const lat = state[6], lon = state[5];
+            return lat && lon && lat >= bounds.minLat && lat <= bounds.maxLat && lon >= bounds.minLon && lon <= bounds.maxLon;
+        }
+
+        function formatTime() {
+            return new Date().toLocaleTimeString();
+        }
+
+        function updateCountdown() {
+            if (nextUpdateTime) {
+                const remaining = Math.max(0, Math.round((nextUpdateTime - Date.now()) / 1000));
+                document.getElementById('nextRefresh').textContent = remaining + 's';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        async function updateLive() {
+            try {
+                console.log('Fetching aviation data...');
+                
+                // Try direct fetch first
+                let res;
+                try {
+                    res = await fetch(OPENSKY);
+                } catch (directError) {
+                    console.log('Direct fetch failed, trying with CORS proxy...');
+                    res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(OPENSKY));
+                }
+                
+                console.log('Response status:', res.status);
+                
+                if (res.status === 429) {
+                    // Rate limited - increase delay
+                    retryDelay = Math.min(retryDelay * 2, 300000);
+                    document.getElementById('dataStatus').textContent = '⏳ Rate Limited';
+                    console.log(`Rate limited. Next retry in ${retryDelay}ms`);
+                    throw new Error('Rate limited');
+                }
+                
+                if (!res.ok) throw new Error('API failed');
+                
+                retryDelay = 120000; // Reset to 2 minutes on success
+                const data = await res.json();
+                const states = data.states || [];
+                console.log('Total states:', states.length);
+
+                const counts = {na: 0, eu: 0, ap: 0, me: 0, sa: 0, af: 0, global: 0};
+
+                states.forEach(state => {
+                    if (!isCommercialCallsign(state[1])) return;
+                    counts.global++;
+                    if (inBounds(state, BOUNDS.na)) counts.na++;
+                    if (inBounds(state, BOUNDS.eu)) counts.eu++;
+                    if (inBounds(state, BOUNDS.ap)) counts.ap++;
+                    if (inBounds(state, BOUNDS.me)) counts.me++;
+                    if (inBounds(state, BOUNDS.sa)) counts.sa++;
+                    if (inBounds(state, BOUNDS.af)) counts.af++;
+                });
+
+                console.log('Counts:', counts);
+
+                // Update live counts
+                ['na', 'eu', 'ap', 'me', 'sa', 'af', 'global'].forEach(id => {
+                    const count = counts[id];
+                    const el = document.getElementById(id + 'Count');
+                    if (el) el.textContent = count.toLocaleString();
+                });
+
+                // Update peaks
+                updatePeaks(counts);
+
+                // Update status
+                document.getElementById('lastUpdate').textContent = formatTime();
+                document.getElementById('dataStatus').textContent = '✅ Live';
+
+            } catch (err) {
+                console.error('API failed, using fallback:', err);
+                
+                // Use fallback data
+                ['na', 'eu', 'ap', 'me', 'sa', 'af', 'global'].forEach(id => {
+                    const el = document.getElementById(id + 'Count');
+                    if (el) el.textContent = FALLBACK[id].toLocaleString();
+                });
+                
+                document.getElementById('dataStatus').textContent = '⚠️ Fallback';
+            }
+
+            // Update YTD and CO2
+            updateYearly();
+            updateCo2();
+            
+            // Schedule next update
+            nextUpdateTime = Date.now() + retryDelay;
+            setTimeout(updateLive, retryDelay);
+        }
+
+        function updatePeaks(counts) {
+            const factors = {na: 1.15, eu: 1.18, ap: 1.21, me: 1.17, sa: 1.19, af: 1.22, global: 1.29};
+            Object.keys(counts).forEach(id => {
+                const live = counts[id];
+                const peak = Math.round(live * factors[id]);
+                const peakEl = document.getElementById(id + 'Peak');
+                if (peakEl) peakEl.textContent = peak.toLocaleString();
+            });
+        }
+
+        function updateYearly() {
+            const daysInYear = 328;
+            const avgDailyFlights = 105000;
+            const totalFlights = daysInYear * avgDailyFlights;
+            
+            ['na', 'eu', 'ap', 'me', 'sa', 'af', 'global'].forEach(id => {
+                const shares = {na: 0.28, eu: 0.25, ap: 0.27, me: 0.08, sa: 0.07, af: 0.05, global: 1.0};
+                const regionFlights = Math.round(totalFlights * shares[id]);
+                const yearlyEl = document.getElementById(id + 'Yearly');
+                if (yearlyEl) yearlyEl.textContent = (regionFlights / 1000000).toFixed(1) + 'M flights';
+            });
+        }
+
+        function updateCo2() {
+            const daysInYear = 328;
+            const avgDailyFlights = 105000;
+            const totalFlights = daysInYear * avgDailyFlights;
+            const avgCo2PerFlight = 90;
+            const totalCo2 = (totalFlights * avgCo2PerFlight) / 1000000;
+            const co2El = document.getElementById('co2Estimate');
+            if (co2El) co2El.textContent = '~' + Math.round(totalCo2) + ' Mt';
+        }
+
+        // Initialize
+        updateLive();
+    </script>
+</body>
+</html>

@@ -1,109 +1,19 @@
 <!-- partials/snapshot.html -->
 <section class="aviation-snapshot">
     <div class="container">
-        <h2>Global Aviation Snapshot</h2>
+        <h2>Global Aviation Data</h2>
         <p style="text-align:center;margin-bottom:40px;color:var(--gray);font-size:1.1rem;">
-            Real-time commercial flights • Updated every 60s • Data: OpenSky Network, OAG, IATA
+            Real-time commercial flights • Regional statistics • Environmental impact
         </p>
 
-        <div class="snapshot-table-container">
-            <table class="snapshot-table">
-                <thead>
-                    <tr>
-                        <th>Region</th>
-                        <th>Live Airborne</th>
-                        <th>2025 So Far</th>
-                        <th>Busiest Airport (Yesterday)</th>
-                        <th>Busiest Airline (Yesterday)</th>
-                        <th>Peak Yesterday</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- North America -->
-                    <tr>
-                        <td class="region-name">North America</td>
-                        <td class="live-count" id="naCount">—</td>
-                        <td class="yearly" id="naYearly">—</td>
-                        <td class="stat">ATL – 2,500 deps</td>
-                        <td class="stat">Delta – 1,100 flts</td>
-                        <td class="stat">~<span id="naPeak">3,800</span> at 14:00 UTC</td>
-                    </tr>
-
-                    <!-- Europe -->
-                    <tr>
-                        <td class="region-name">Europe</td>
-                        <td class="live-count" id="euCount">—</td>
-                        <td class="yearly" id="euYearly">—</td>
-                        <td class="stat">LHR – 1,400 deps</td>
-                        <td class="stat">Ryanair – 250 flts</td>
-                        <td class="stat">~<span id="euPeak">2,600</span> at 12:00 UTC</td>
-                    </tr>
-
-                    <!-- Asia-Pacific -->
-                    <tr>
-                        <td class="region-name">Asia-Pacific</td>
-                        <td class="live-count" id="apCount">—</td>
-                        <td class="yearly" id="apYearly">—</td>
-                        <td class="stat">DXB – 1,300 deps</td>
-                        <td class="stat">China Southern – 320 flts</td>
-                        <td class="stat">~<span id="apPeak">2,900</span> at 16:00 UTC</td>
-                    </tr>
-
-                    <!-- Middle East -->
-                    <tr>
-                        <td class="region-name">Middle East</td>
-                        <td class="live-count" id="meCount">—</td>
-                        <td class="yearly" id="meYearly">—</td>
-                        <td class="stat">DOH – 1,100 deps</td>
-                        <td class="stat">Emirates – 280 flts</td>
-                        <td class="stat">~<span id="mePeak">1,200</span> at 15:00 UTC</td>
-                    </tr>
-
-                    <!-- South America -->
-                    <tr>
-                        <td class="region-name">South America</td>
-                        <td class="live-count" id="saCount">—</td>
-                        <td class="yearly" id="saYearly">—</td>
-                        <td class="stat">GRU – 1,000 deps</td>
-                        <td class="stat">LATAM – 220 flts</td>
-                        <td class="stat">~<span id="saPeak">1,000</span> at 13:00 UTC</td>
-                    </tr>
-
-                    <!-- Africa -->
-                    <tr>
-                        <td class="region-name">Africa</td>
-                        <td class="live-count" id="afCount">—</td>
-                        <td class="yearly" id="afYearly">—</td>
-                        <td class="stat">JNB – 800 deps</td>
-                        <td class="stat">Ethiopian – 150 flts</td>
-                        <td class="stat">~<span id="afPeak">700</span> at 14:00 UTC</td>
-                    </tr>
-
-                    <!-- Global Total -->
-                    <tr class="total-row">
-                        <td class="region-name"><strong>Global Total</strong></td>
-                        <td class="live-count" id="globalCount">—</td>
-                        <td class="yearly" id="globalYearly">—</td>
-                        <td class="stat"><strong>ATL – 2,500 deps</strong></td>
-                        <td class="stat"><strong>United – 1,200 flts</strong></td>
-                        <td class="stat"><strong>~<span id="globalPeak">12,300</span> at 14:00 UTC</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- CO₂ Estimate -->
-        <div class="co2-estimate">
-            <h4>Global Aviation CO₂ Emissions (2025 YTD)</h4>
-            <div class="value" id="co2Estimate">~1,000 Mt</div>
-            <div class="note">Est. from ~31M flights • Sustainable solutions available</div>
-        </div>
-
-        <!-- Live Map -->
-        <div class="map-container">
-            <h3 style="text-align:center;margin-bottom:16px;">Live Global Flight Map</h3>
-            <div id="liveMap"></div>
-            <div class="map-note">Real-time commercial aircraft • Zoom & explore • Updates every 30s</div>
+        <!-- Buttons side by side -->
+        <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;padding:40px 0;">
+            <a href="aviation-snapshot.html" class="cta-button" style="text-decoration:none;">
+                View Aviation Snapshot
+            </a>
+            <a href="live-map.html" class="cta-button" style="text-decoration:none;">
+                View Live Flight Map
+            </a>
         </div>
     </div>
 </section>

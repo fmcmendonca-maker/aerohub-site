@@ -25,8 +25,8 @@ function initApp() {
     });
 
     // === LIVE DATA & MAP ===
-    const PROXY = 'https://corsproxy.io/?';
     const OPENSKY = 'https://opensky-network.org/api/states/all';
+    let retryDelay = 5000; // Start with 5 second delay
 
     const BOUNDS = {
         na: {minLat: 20, maxLat: 60, minLon: -130, maxLon: -50},
@@ -54,8 +54,25 @@ function initApp() {
 
     async function updateLive() {
         try {
-            const res = await fetch(PROXY + encodeURIComponent(OPENSKY));
-            if (!res.ok) throw new Error('Proxy failed');
+            // Try direct fetch first (works on https sites)
+            let res;
+            try {
+                res = await fetch(OPENSKY);
+            } catch (directError) {
+                console.log('Direct fetch failed, trying with CORS proxy...');
+                res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(OPENSKY));
+            }
+            
+            if (res.status === 429) {
+                // Rate limited - use fallback and increase delay
+                retryDelay = Math.min(retryDelay * 2, 300000); // Max 5 minutes
+                console.log(`Rate limited. Next retry in ${retryDelay}ms`);
+                throw new Error('Rate limited');
+            }
+            
+            if (!res.ok) throw new Error('API failed');
+            
+            retryDelay = 120000; // Reset to 2 minutes on success
             const data = await res.json();
             const states = data.states || [];
 
@@ -106,6 +123,9 @@ function initApp() {
         // Update YTD
         updateYearly();
         updateCo2();
+        
+        // Update every 2 minutes (reduced to avoid rate limits)
+        setTimeout(updateLive, retryDelay);
     }
 
     function updatePeaks(counts) {
@@ -173,7 +193,15 @@ function initApp() {
     async function updateMap() {
         markers.clearLayers();
         try {
-            const res = await fetch(PROXY + encodeURIComponent(OPENSKY));
+            // Try direct fetch first
+            let res;
+            try {
+                res = await fetch(OPENSKY);
+            } catch (directError) {
+                console.log('Direct fetch failed, trying with CORS proxy...');
+                res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(OPENSKY));
+            }
+            
             if (res.ok) {
                 const data = await res.json();
                 (data.states || [])
@@ -210,8 +238,8 @@ function initApp() {
         } catch (e) {
             console.error('Map update failed:', e);
         }
-        // Reduced map polling from 30s to 60s for better performance
-        setTimeout(updateMap, 60000);
+        // Reduced map polling to 2 minutes for better performance and avoid rate limits
+        setTimeout(updateMap, 120000);
     }
 
     // === START EVERYTHING ===
