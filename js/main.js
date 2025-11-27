@@ -1,5 +1,33 @@
 // js/main.js
 function initApp() {
+    // === HAMBURGER MENU ===
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            mobileMenu.classList.toggle('open');
+            // Change hamburger color when open
+            const spans = hamburgerBtn.querySelectorAll('span');
+            if (mobileMenu.classList.contains('open')) {
+                spans.forEach(s => s.style.background = '#F47C20');
+            } else {
+                spans.forEach(s => s.style.background = '#fff');
+            }
+        };
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!hamburgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+                const spans = hamburgerBtn.querySelectorAll('span');
+                spans.forEach(s => s.style.background = '#fff');
+            }
+        });
+    }
+
     // === THEME TOGGLE ===
     const toggle = document.getElementById('themeToggle');
     const body = document.body;
